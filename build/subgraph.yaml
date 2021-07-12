@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: grassNFT721
@@ -21,7 +21,7 @@ dataSources:
         - Transfer
       abis:
         - name: grassNFT721
-          file: ./abis/grassNFT721.json
+          file: grassNFT721\abis\grassNFT721.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,indexed uint256)
           handler: handleApproval
@@ -33,7 +33,7 @@ dataSources:
           handler: handleOwnershipTransferred
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: grassNFT721\grassNFT721.wasm
   - kind: ethereum/contract
     name: grassEscrow
     network: ropsten
@@ -57,7 +57,7 @@ dataSources:
         - OwnershipTransferred
       abis:
         - name: grassEscrow
-          file: ./abis/grassEscrow.json
+          file: grassEscrow\abis\grassEscrow.json
       eventHandlers:
         - event: SaleComplete(uint256,address,address,uint256)
           handler: handleSaleComplete
@@ -65,4 +65,4 @@ dataSources:
           handler: handleSaleCreated
         - event: SaleCanceled(uint256,address)
           handler: handleSaleCanceled
-      file: ./src/mappingEscrow.ts
+      file: grassEscrow\grassEscrow.wasm

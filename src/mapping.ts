@@ -7,31 +7,31 @@ import {
   OwnershipTransferred,
   Transfer
 } from "../generated/grassNFT721/grassNFT721"
-import { ExampleEntity } from "../generated/schema"
+import { NFTEntity, Transaction } from "../generated/schema"
 
 export function handleApproval(event: Approval): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
-  let entity = ExampleEntity.load(event.transaction.from.toHex())
+  // let entity = ExampleEntity.load(event.transaction.from.toHex())
 
-  // Entities only exist after they have been saved to the store;
-  // `null` checks allow to create entities on demand
-  if (entity == null) {
-    entity = new ExampleEntity(event.transaction.from.toHex())
+  // // Entities only exist after they have been saved to the store;
+  // // `null` checks allow to create entities on demand
+  // if (entity == null) {
+  //   entity = new ExampleEntity(event.transaction.from.toHex())
 
-    // Entity fields can be set using simple assignments
-    entity.count = BigInt.fromI32(0)
-  }
+  //   // Entity fields can be set using simple assignments
+  //   entity.count = BigInt.fromI32(0)
+  // }
 
-  // BigInt and BigDecimal math are supported
-  entity.count = entity.count + BigInt.fromI32(1)
+  // // BigInt and BigDecimal math are supported
+  // entity.count = entity.count + BigInt.fromI32(1)
 
-  // Entity fields can be set based on event parameters
-  entity.owner = event.params.owner
-  entity.approved = event.params.approved
+  // // Entity fields can be set based on event parameters
+  // entity.owner = event.params.owner
+  // entity.approved = event.params.approved
 
-  // Entities can be written to the store with `.save()`
-  entity.save()
+  // // Entities can be written to the store with `.save()`
+  // entity.save()
 
   // Note: If a handler doesn't require existing field values, it is faster
   // _not_ to load the entity from the store. Instead, create it fresh with
@@ -64,8 +64,33 @@ export function handleApproval(event: Approval): void {
 
 export function handleApprovalForAll(event: ApprovalForAll): void {}
 
-export function handleNFTCreated(event: NFTCreated): void {}
+export function handleNFTCreated(event: NFTCreated): void {
+  let id = event.params.tokenId.toHex()
+  let nft =  new NFTEntity(id)
+
+  nft.uri = event.params.uri
+  nft.artist = event.params.artist
+  nft.owner = event.params.artist
+  nft.name = event.params.name
+  nft.description = event.params.description
+  nft.save()
+}
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
 
-export function handleTransfer(event: Transfer): void {}
+export function handleTransfer(event: Transfer): void {
+  let id = event.params.tokenId.toHex()
+  let nft = NFTEntity.load(id)
+  nft.owner = event.params.to 
+  nft.save()
+
+  let time = event.block.timestamp
+  let transactionId = event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+  let transaction = new Transaction(transactionId)
+
+  transaction.from = event.params.from
+  transaction.to = event.params.to
+  transaction.token = id
+  transaction.timestamp = time
+  transaction.save()
+}
