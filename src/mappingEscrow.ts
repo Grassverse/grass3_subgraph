@@ -11,11 +11,11 @@ import {
   SaleCanceled,
   OwnershipTransferred
 } from "../generated/grassEscrow/grassEscrow"
-import { NFTEntity, Transaction, Sale } from "../generated/schema"
+import { Sale } from "../generated/schema"
 
 export function handleSaleCreated(event: SaleCreated): void {
     let time = event.block.timestamp
-    let saleId = event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+    let saleId = event.params.saleId.toHex()
     let sale = new Sale(saleId)
 
     sale.token = event.params.tokenId.toHex()
@@ -28,18 +28,19 @@ export function handleSaleCreated(event: SaleCreated): void {
 }
 
 export function handleSaleComplete(event: SaleComplete): void {
-    let id = event.params.tokenId.toHex()
+    let saleId = event.params.saleId.toHex()
     let time = event.block.timestamp
-    let sale = Sale.load(id)
+    let sale = Sale.load(saleId)
     sale.isComplete = true
     sale.saleEndedAt = time
+    sale.buyer = event.params.buyer
     sale.save()
 }
 
 export function handleSaleCanceled(event: SaleCanceled): void {
-    let id = event.params.tokenId.toHex()
+    let saleId = event.params.saleId.toHex()
     let time = event.block.timestamp
-    let sale = Sale.load(id)
+    let sale = Sale.load(saleId)
     sale.isComplete = true
     sale.saleEndedAt = time
     sale.save()

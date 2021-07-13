@@ -23,24 +23,28 @@ export class AuctionBid__Params {
     this._event = event;
   }
 
-  get tokenId(): BigInt {
+  get auctionId(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
 
+  get tokenId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
   get bidder(): Address {
-    return this._event.parameters[1].value.toAddress();
+    return this._event.parameters[2].value.toAddress();
   }
 
   get bid(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
+    return this._event.parameters[3].value.toBigInt();
   }
 
   get firstBid(): boolean {
-    return this._event.parameters[3].value.toBoolean();
+    return this._event.parameters[4].value.toBoolean();
   }
 
   get extended(): boolean {
-    return this._event.parameters[4].value.toBoolean();
+    return this._event.parameters[5].value.toBoolean();
   }
 }
 
@@ -57,12 +61,16 @@ export class AuctionCanceled__Params {
     this._event = event;
   }
 
-  get tokenId(): BigInt {
+  get auctionId(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
 
+  get tokenId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
   get tokenOwner(): Address {
-    return this._event.parameters[1].value.toAddress();
+    return this._event.parameters[2].value.toAddress();
   }
 }
 
@@ -79,28 +87,32 @@ export class AuctionCreated__Params {
     this._event = event;
   }
 
-  get tokenId(): BigInt {
+  get auctionId(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get duration(): BigInt {
+  get tokenId(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  get reservePrice(): BigInt {
+  get duration(): BigInt {
     return this._event.parameters[2].value.toBigInt();
   }
 
-  get tokenOwner(): Address {
-    return this._event.parameters[3].value.toAddress();
+  get reservePrice(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
   }
 
-  get curator(): Address {
+  get tokenOwner(): Address {
     return this._event.parameters[4].value.toAddress();
   }
 
+  get curator(): Address {
+    return this._event.parameters[5].value.toAddress();
+  }
+
   get curatorFeePercentage(): BigInt {
-    return this._event.parameters[5].value.toBigInt();
+    return this._event.parameters[6].value.toBigInt();
   }
 }
 
@@ -117,12 +129,16 @@ export class AuctionDurationExtended__Params {
     this._event = event;
   }
 
-  get tokenId(): BigInt {
+  get auctionId(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get newDuration(): BigInt {
+  get tokenId(): BigInt {
     return this._event.parameters[1].value.toBigInt();
+  }
+
+  get newDuration(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
   }
 }
 
@@ -139,28 +155,32 @@ export class AuctionEnded__Params {
     this._event = event;
   }
 
-  get tokenId(): BigInt {
+  get auctionId(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get tokenOwner(): Address {
-    return this._event.parameters[1].value.toAddress();
+  get tokenId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
   }
 
-  get curator(): Address {
+  get tokenOwner(): Address {
     return this._event.parameters[2].value.toAddress();
   }
 
-  get bidder(): Address {
+  get curator(): Address {
     return this._event.parameters[3].value.toAddress();
   }
 
+  get bidder(): Address {
+    return this._event.parameters[4].value.toAddress();
+  }
+
   get ownerProfit(): BigInt {
-    return this._event.parameters[4].value.toBigInt();
+    return this._event.parameters[5].value.toBigInt();
   }
 
   get curatorFee(): BigInt {
-    return this._event.parameters[5].value.toBigInt();
+    return this._event.parameters[6].value.toBigInt();
   }
 }
 
@@ -221,12 +241,16 @@ export class SaleCanceled__Params {
     this._event = event;
   }
 
-  get tokenId(): BigInt {
+  get saleId(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
 
+  get tokenId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
   get tokenOwner(): Address {
-    return this._event.parameters[1].value.toAddress();
+    return this._event.parameters[2].value.toAddress();
   }
 }
 
@@ -243,20 +267,24 @@ export class SaleComplete__Params {
     this._event = event;
   }
 
-  get tokenId(): BigInt {
+  get saleId(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get seller(): Address {
-    return this._event.parameters[1].value.toAddress();
+  get tokenId(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
   }
 
-  get buyer(): Address {
+  get seller(): Address {
     return this._event.parameters[2].value.toAddress();
   }
 
+  get buyer(): Address {
+    return this._event.parameters[3].value.toAddress();
+  }
+
   get price(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
+    return this._event.parameters[4].value.toBigInt();
   }
 }
 
@@ -273,16 +301,20 @@ export class SaleCreated__Params {
     this._event = event;
   }
 
-  get tokenId(): BigInt {
+  get saleId(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get price(): BigInt {
+  get tokenId(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
 
+  get price(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
   get tokenOwner(): Address {
-    return this._event.parameters[2].value.toAddress();
+    return this._event.parameters[3].value.toAddress();
   }
 }
 
@@ -349,7 +381,7 @@ export class grassEscrow__auctionsResult {
 }
 
 export class grassEscrow__getAuctionResultValue0Struct extends ethereum.Tuple {
-  get tokenId(): BigInt {
+  get auctionId(): BigInt {
     return this[0].toBigInt();
   }
 
@@ -379,28 +411,35 @@ export class grassEscrow__getAuctionResultValue0Struct extends ethereum.Tuple {
 }
 
 export class grassEscrow__getSaleResultValue0Struct extends ethereum.Tuple {
-  get price(): BigInt {
+  get saleId(): BigInt {
     return this[0].toBigInt();
   }
 
+  get price(): BigInt {
+    return this[1].toBigInt();
+  }
+
   get tokenOwner(): Address {
-    return this[1].toAddress();
+    return this[2].toAddress();
   }
 }
 
 export class grassEscrow__salesResult {
   value0: BigInt;
-  value1: Address;
+  value1: BigInt;
+  value2: Address;
 
-  constructor(value0: BigInt, value1: Address) {
+  constructor(value0: BigInt, value1: BigInt, value2: Address) {
     this.value0 = value0;
     this.value1 = value1;
+    this.value2 = value2;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
     map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromAddress(this.value1));
+    map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
+    map.set("value2", ethereum.Value.fromAddress(this.value2));
     return map;
   }
 }
@@ -557,9 +596,11 @@ export class grassEscrow extends ethereum.SmartContract {
   }
 
   getSale(tokenId: BigInt): grassEscrow__getSaleResultValue0Struct {
-    let result = super.call("getSale", "getSale(uint256):((uint256,address))", [
-      ethereum.Value.fromUnsignedBigInt(tokenId)
-    ]);
+    let result = super.call(
+      "getSale",
+      "getSale(uint256):((uint256,uint256,address))",
+      [ethereum.Value.fromUnsignedBigInt(tokenId)]
+    );
 
     return result[0].toTuple() as grassEscrow__getSaleResultValue0Struct;
   }
@@ -569,7 +610,7 @@ export class grassEscrow extends ethereum.SmartContract {
   ): ethereum.CallResult<grassEscrow__getSaleResultValue0Struct> {
     let result = super.tryCall(
       "getSale",
-      "getSale(uint256):((uint256,address))",
+      "getSale(uint256):((uint256,uint256,address))",
       [ethereum.Value.fromUnsignedBigInt(tokenId)]
     );
     if (result.reverted) {
@@ -612,26 +653,35 @@ export class grassEscrow extends ethereum.SmartContract {
   }
 
   sales(param0: BigInt): grassEscrow__salesResult {
-    let result = super.call("sales", "sales(uint256):(uint256,address)", [
-      ethereum.Value.fromUnsignedBigInt(param0)
-    ]);
+    let result = super.call(
+      "sales",
+      "sales(uint256):(uint256,uint256,address)",
+      [ethereum.Value.fromUnsignedBigInt(param0)]
+    );
 
     return new grassEscrow__salesResult(
       result[0].toBigInt(),
-      result[1].toAddress()
+      result[1].toBigInt(),
+      result[2].toAddress()
     );
   }
 
   try_sales(param0: BigInt): ethereum.CallResult<grassEscrow__salesResult> {
-    let result = super.tryCall("sales", "sales(uint256):(uint256,address)", [
-      ethereum.Value.fromUnsignedBigInt(param0)
-    ]);
+    let result = super.tryCall(
+      "sales",
+      "sales(uint256):(uint256,uint256,address)",
+      [ethereum.Value.fromUnsignedBigInt(param0)]
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new grassEscrow__salesResult(value[0].toBigInt(), value[1].toAddress())
+      new grassEscrow__salesResult(
+        value[0].toBigInt(),
+        value[1].toBigInt(),
+        value[2].toAddress()
+      )
     );
   }
 

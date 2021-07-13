@@ -8,7 +8,7 @@ dataSources:
     source:
       address: "0xeBb872D5394328822fDe39FD988c37e91930c7cF"
       abi: grassNFT721
-      startBlock: 5027917
+      startBlock: 9027917
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -38,9 +38,9 @@ dataSources:
     name: grassEscrow
     network: ropsten
     source:
-      address: "0xda8194d63511efEa23678ca3007E5346bE3c926F"
+      address: "0x524141052F39C1Fe9d7092dfB57851E7C00A18a9"
       abi: grassEscrow
-      startBlock: 5027917
+      startBlock: 9027917
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -59,10 +59,10 @@ dataSources:
         - name: grassEscrow
           file: ./abis/grassEscrow.json
       eventHandlers:
-        - event: SaleComplete(uint256,address,address,uint256)
+        - event: SaleComplete(uint256,uint256,address,address,uint256)
           handler: handleSaleComplete
-        - event: SaleCreated(uint256,uint256,address)
+        - event: SaleCreated(uint256,uint256,uint256,address)
           handler: handleSaleCreated
-        - event: SaleCanceled(uint256,address)
+        - event: SaleCanceled(uint256,uint256,address)
           handler: handleSaleCanceled
       file: ./src/mappingEscrow.ts

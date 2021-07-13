@@ -228,6 +228,23 @@ export class Sale extends Entity {
     this.set("owner", Value.fromBytes(value));
   }
 
+  get buyer(): Bytes | null {
+    let value = this.get("buyer");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set buyer(value: Bytes | null) {
+    if (value === null) {
+      this.unset("buyer");
+    } else {
+      this.set("buyer", Value.fromBytes(value as Bytes));
+    }
+  }
+
   get isComplete(): boolean {
     let value = this.get("isComplete");
     return value.toBoolean();
