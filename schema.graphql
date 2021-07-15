@@ -1,10 +1,31 @@
+enum BidStatus {
+  OPEN
+  CANCELED
+  ACCEPTED
+}
+
+enum AuctionStatus {
+  OPEN
+  STARTED
+  SOLD
+  CANCELED
+}
+
+enum SaleStatus {
+  OPEN
+  SOLD
+  CANCELED
+}
+
 type NFTEntity @entity {
   id: ID!
   uri: String!
   owner: Bytes! # address
-  artist: Bytes! # address
+  creator: Creator!
   name: String
   description: String
+  sale: Sale
+  auction: Auction
 }
 
 type Transaction @entity {
@@ -21,9 +42,40 @@ type Sale @entity {
   price: BigInt!
   owner: Bytes!
   buyer: Bytes
-  isComplete: Boolean!
+  status: SaleStatus!
   saleCreatedAt: BigInt!
   saleEndedAt: BigInt!
+  txnHash: Bytes
+}
+
+type Creator @entity {
+  id: ID!
+  nfts: [NFTEntity!]! @derivedFrom(field: "creator")
+}
+
+type Auction @entity {
+  id: ID!
+  token: NFTEntity!
+  reservePrice: BigInt!
+  owner: Bytes!
+  bids: [Bid!] @derivedFrom(field: "auction")
+  firstBidTime: BigInt
+  duration: BigInt!
+  lastBid: Bid
+  status: AuctionStatus!
+  auctionCreatedAt: BigInt!
+  auctionEndedAt: BigInt
+  txnHash: Bytes
+}
+
+type Bid @entity {
+  id: ID!
+  auction: Auction!
+  bidder: Bytes!
+  bid: BigInt!
+  status: BidStatus!
+  timestamp: BigInt!
+  txnHash: Bytes!
 }
 
 type _Schema_

@@ -7,7 +7,7 @@ import {
   OwnershipTransferred,
   Transfer
 } from "../generated/grassNFT721/grassNFT721"
-import { NFTEntity, Transaction } from "../generated/schema"
+import { NFTEntity, Transaction, Creator } from "../generated/schema"
 
 export function handleApproval(event: Approval): void {
   // Entities can be loaded from the store using a string ID; this ID
@@ -65,15 +65,25 @@ export function handleApproval(event: Approval): void {
 export function handleApprovalForAll(event: ApprovalForAll): void {}
 
 export function handleNFTCreated(event: NFTCreated): void {
-  let id = event.params.tokenId.toHex()
-  let nft =  new NFTEntity(id)
+  let id = event.params.tokenId.toHex();
+  let creatorAddress = event.params.artist.toHexString()
 
-  nft.uri = event.params.uri
-  nft.artist = event.params.artist
-  nft.owner = event.params.artist
-  nft.name = event.params.name
-  nft.description = event.params.description
-  nft.save()
+  let nft =  new NFTEntity(id)
+  
+  nft.uri = event.params.uri;
+  nft.creator = creatorAddress;
+  nft.owner = event.params.artist;
+  nft.name = event.params.name;
+  nft.description = event.params.description;
+  nft.save();
+
+  let creator = Creator.load(creatorAddress)
+
+  if(creator == null)
+  {
+    creator = new Creator(creatorAddress);
+  } 
+  creator.save();
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {}

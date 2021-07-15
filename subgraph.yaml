@@ -8,7 +8,7 @@ dataSources:
     source:
       address: "0xeBb872D5394328822fDe39FD988c37e91930c7cF"
       abi: grassNFT721
-      startBlock: 9027917
+      startBlock: 10427917
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -40,7 +40,7 @@ dataSources:
     source:
       address: "0x524141052F39C1Fe9d7092dfB57851E7C00A18a9"
       abi: grassEscrow
-      startBlock: 9027917
+      startBlock: 10427917
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -65,4 +65,14 @@ dataSources:
           handler: handleSaleCreated
         - event: SaleCanceled(uint256,uint256,address)
           handler: handleSaleCanceled
+        - event: AuctionCreated(uint256,uint256,uint256,uint256,address,address,uint256)
+          handler: handleAuctionCreated
+        - event: AuctionBid(uint256,uint256,address,uint256,bool,bool)
+          handler: handleAuctionBid
+        - event: AuctionDurationExtended(uint256,uint256,uint256)
+          handler: handleAuctionDurationExtended
+        - event: AuctionEnded(uint256,uint256,address,address,address,uint256,uint256)
+          handler: handleAuctionEnded
+        - event: AuctionCanceled(uint256,uint256,address)
+          handler: handleAuctionCanceled
       file: ./src/mappingEscrow.ts
